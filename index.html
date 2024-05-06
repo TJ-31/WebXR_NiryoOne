@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebXR Niryo One Robot Scene</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+    <a-scene>
+        <!-- Environment -->
+        <a-sky color="#6EBAA7"></a-sky>
+        <a-plane position="0 0 -4" rotation="-90 0 0" width="20" height="20" color="#555"></a-plane>
+        
+        <!-- Robot -->
+        <a-entity id="robot" gltf-model="models/niryo.glb" scale="0.05 0.05 0.05" position="0 0 -3"></a-entity>
+        
+        <!-- Accident/Incident Detection -->
+        <a-box position="0 1 -3" width="1" height="2" depth="1" color="red" visible="false" id="incident-box"></a-box>
+    </a-scene>
+
+    <script>
+        // JavaScript for accident/incident detection
+        document.getElementById('robot').addEventListener('collide', function (event) {
+            // Collision detected with the robot
+            var collisionObject = event.detail.body.el;
+            if (collisionObject.id === 'obstacle') {
+                // An accident or incident is detected
+                document.getElementById('incident-box').setAttribute('visible', true);
+            }
+        });
+    </script>
+</body>
+</html>
